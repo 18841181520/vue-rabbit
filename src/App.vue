@@ -6,10 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <RouterView />
 </template>
 
-<style scoped>
-.test{
-  color: $priceColor;
-}
+<style scoped lang="scss">
 header {
   line-height: 1.5;
   max-height: 100vh;

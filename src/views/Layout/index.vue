@@ -13,8 +13,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <LayoutNav/>
   <LayoutSticky/>
+  <LayoutNav/>
   <LayoutHeader/>
   <RouterView/>
   <LayoutFooter/>
