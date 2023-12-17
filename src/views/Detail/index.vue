@@ -1,7 +1,6 @@
 <script setup>
 import {getDetailAPI} from "@/apis/detail.js";
 import DetailHot from "@/views/Detail/components/DetailHot.vue";
-import ImageView from "@/components/ImageView/index.vue"
 import {ref, onMounted} from "vue";
 import {useRoute} from "vue-router";
 
@@ -10,10 +9,13 @@ const route = useRoute();
 const getDetail = async () => {
   const res = await getDetailAPI(route.params.id)
   goods.value = res.result
-  console.log(goods.value)
 }
 
 onMounted(() => getDetail())
+
+const skuChange = (sku) => {
+  console.log(sku)
+}
 
 </script>
 
@@ -85,7 +87,7 @@ onMounted(() => getDetail())
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <Sku :goods="goods" @change="skuChange"/>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
