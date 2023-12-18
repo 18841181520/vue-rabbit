@@ -1,5 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
+import {ElMessage} from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import {useRouter} from "vue-router";
+import {useUserStore} from "@/stores/user.js";
+
+const router = useRouter()
+const userStore = useUserStore()
 
 const userInfo = ref({
   account: '',
@@ -8,11 +15,11 @@ const userInfo = ref({
 })
 const rules = {
   account: [
-    { required: true, message: '用户名不能为空', trigger: 'blur' }
+    {required: true, message: '用户名不能为空', trigger: 'blur'}
   ],
   password: [
-    { required: true, message: '密码不能为空', trigger: 'blur' },
-    { min: 6, max: 14, message: '密码长度为6-14个字符', trigger: 'blur' }
+    {required: true, message: '密码不能为空', trigger: 'blur'},
+    {min: 6, max: 14, message: '密码长度为6-14个字符', trigger: 'blur'}
   ],
   agree: [
     {
@@ -25,9 +32,15 @@ const rules = {
 }
 
 const formRef = ref(null)
+
 const doLogin = () => {
-  formRef.value.validate((valid) => {
-    console.log(valid);
+  const {account, password} = userInfo.value
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      await userStore.getUserInfo({account, password})
+      ElMessage({type: 'success', message: '登陆成功'})
+      router.replace({path: '/'})
+    }
   })
 }
 
@@ -55,12 +68,13 @@ const doLogin = () => {
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form :model="userInfo" ref="formRef" :rules="rules" label-position="right" label-width="60px" status-icon>
+            <el-form :model="userInfo" ref="formRef" :rules="rules" label-position="right" label-width="60px"
+                     status-icon>
               <el-form-item prop="account" label="账户">
-                <el-input v-model="userInfo.account" />
+                <el-input v-model="userInfo.account"/>
               </el-form-item>
               <el-form-item prop="password" label="密码">
-                <el-input v-model="userInfo.password" />
+                <el-input v-model="userInfo.password"/>
               </el-form-item>
               <el-form-item prop="agree" label-width="22px">
                 <el-checkbox v-model="userInfo.agree" size="large">
@@ -187,7 +201,7 @@ const doLogin = () => {
       color: #999;
       display: inline-block;
 
-      ~a {
+      ~ a {
         border-left: 1px solid #ccc;
       }
     }
@@ -218,7 +232,7 @@ const doLogin = () => {
         position: relative;
         height: 36px;
 
-        >i {
+        > i {
           width: 34px;
           height: 34px;
           background: #cfcdcd;
@@ -263,7 +277,7 @@ const doLogin = () => {
         }
       }
 
-      >.error {
+      > .error {
         position: absolute;
         font-size: 12px;
         line-height: 28px;
