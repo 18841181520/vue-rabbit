@@ -3,7 +3,7 @@ import {getDetailAPI} from "@/apis/detail.js";
 import DetailHot from "@/views/Detail/components/DetailHot.vue";
 import {ref, onMounted} from "vue";
 import {useRoute} from "vue-router";
-import {useCartStore} from "@/stores/cart.js";
+import {useCartStore} from "@/stores/cartStore.js";
 import {ElMessage} from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 
@@ -24,7 +24,6 @@ const skuChange = (sku) => {
   skuObj = sku
 }
 const countChange = (count) => {
-  console.log(count)
 }
 
 const addCart = () => {
@@ -116,7 +115,7 @@ const addCart = () => {
               <!-- sku组件 -->
               <Sku :goods="goods" @change="skuChange"/>
               <!-- 数据组件 -->
-              <el-input-number v-model="count" @change="countChange"></el-input-number>
+              <el-input-number v-model="count" :min="1" @change="countChange"></el-input-number>
               <!-- 按钮组件 -->
               <div>
                 <el-button size="large" class="btn" @click="addCart">
