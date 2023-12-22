@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
-import {loginAPI} from "@/apis/login.js";
+import {loginAPI} from "@/apis/user.js";
 import {useCartStore} from "@/stores/cartStore.js";
 import {mergeCartAPI} from "@/apis/cart.js";
 
